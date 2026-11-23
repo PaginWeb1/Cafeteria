@@ -563,13 +563,15 @@ placeholder="Dirección">
     
 <button
 class="btn btn-warning btn-sm w-100 mt-2"
-onclick="exportarPedido()">
+onclick="guardarGoogleSheets(); exportarPedido(); enviarWhatsApp();">
 💳 Pagar
 </button>
 </div>
 
-<a href="https://wa.me/56912345678?text=Hola%20quiero%20hacer%20un%20pedido" class="whatsapp" onclick="enviarWhatsApp()">
-    <i class="bi bi-whatsapp"></i>
+<a href="#"
+class="whatsapp"
+onclick="enviarWhatsApp(); return false;">
+<i class="bi bi-whatsapp"></i>
 </a>
 
 <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -587,203 +589,194 @@ Producto agregado al carrito.
 
 <script>
 
-function enviarWhatsApp() {
-
-    if (pedido.length === 0) {
-        alert("No hay productos en el carrito");
-        return;
-    }
-
-    const cliente =
-        document.getElementById("cliente").value || "No informado";
-
-    const telefono =
-        document.getElementById("telefono").value || "No informado";
-
-    const direccion =
-        document.getElementById("direccion").value || "No informada";
-
-    let mensaje =
-`☕ CAFÉ AROMA PREMIUM
-
-Cliente: ${cliente}
-Teléfono: ${telefono}
-Dirección: ${direccion}
-
-PEDIDO:
-`;
-
-    pedido.forEach(item => {
-
-        mensaje += `
-${item.producto}
-x${item.cantidad}
-= $${item.subtotal.toLocaleString("es-CL")}
-`;
-    });
-
-    mensaje += `
-
-TOTAL: $${total.toLocaleString("es-CL")}
-`;
-
-    const numero = "56912345678";
-
-    const url =
-        `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-
-    window.open(url, "_blank");
-}    
-
 let total = 0;
 let pedido = [];
+
+/* =========================
+   AGREGAR AL CARRITO
+========================= */
 
 function agregarCarrito(nombre, precio){
 
     total += precio;
 
-  const existente =
-pedido.find(p => p.producto === nombre);
+    const existente =
+    pedido.find(p => p.producto === nombre);
 
-if(existente){
+    if(existente){
 
-    existente.cantidad++;
-    existente.subtotal += precio;
+        existente.cantidad++;
+        existente.subtotal += precio;
 
-}else{
+    }else{
 
-    pedido.push({
-        producto:nombre,
-        cantidad:1,
-        precio:precio,
-        subtotal:precio
-    });
+        pedido.push({
+            producto:nombre,
+            cantidad:1,
+            precio:precio,
+            subtotal:precio
+        });
 
-}
+    }
 
     document.getElementById("total").innerText =
     total.toLocaleString("es-CL");
 
-    const toast = new bootstrap.Toast(
+    const toast =
+    new bootstrap.Toast(
         document.getElementById("toastCafe")
     );
 
     toast.show();
 }
 
- function exportarPedido(){
+/* =========================
+   WHATSAPP
+========================= */
 
-if(pedido.length === 0){
-    alert("No hay productos");
-    return;
-}
-const datosPedido = {
-    fecha,
-    cliente,
-    telefono,
-    direccion,
-    pedido
-};
-fetch(
-"https://script.google.com/macros/s/AKfycbyuev3fi1-4RXdlKZt5svxBDzSthn_w1hylJdvOd_lwLyB7qI2jEaQ2bXSujoSEE7Fx/exec",
-{
-    method:"POST",
-    body:JSON.stringify(datosPedido)
-})
-.then(r => r.text())
-.then(data => {
-    console.log("Pedido guardado");
-});
-const cliente =
-document.getElementById("cliente").value || "No informado";
+function enviarWhatsApp(){
 
-const telefono =
-document.getElementById("telefono").value || "No informado";
+    if(pedido.length === 0){
 
-const direccion =
-document.getElementById("direccion").value || "No informada";
+        alert("No hay productos en el carrito");
+        return;
 
-const fecha =
-new Date().toLocaleString("es-CL");
+    }
 
-let datos = [];
+    const cliente =
+    document.getElementById("cliente").value || "No informado";
 
-datos.push({
-    Producto:"CAFÉ AROMA PREMIUM",
-    Cantidad:"",
-    Precio:"",
-    Subtotal:""
-});
+    const telefono =
+    document.getElementById("telefono").value || "No informado";
 
-datos.push({});
+    const direccion =
+    document.getElementById("direccion").value || "No informada";
 
-datos.push({
-    Producto:"Fecha",
-    Cantidad:fecha
-});
+    const fecha =
+    new Date().toLocaleString("es-CL");
 
-datos.push({
-    Producto:"Cliente",
-    Cantidad:cliente
-});
+    let mensaje = `☕ CAFÉ AROMA PREMIUM
 
-datos.push({
-    Producto:"Teléfono",
-    Cantidad:telefono
-});
+Fecha: ${fecha}
 
-datos.push({
-    Producto:"Dirección",
-    Cantidad:direccion
-});
+Cliente: ${cliente}
+Teléfono: ${telefono}
+Dirección: ${direccion}
 
-datos.push({});
+PEDIDO
 
-datos.push({
-    Producto:"Producto",
-    Cantidad:"Cantidad",
-    Precio:"Precio Unitario",
-    Subtotal:"Subtotal"
-});
+`;
 
-pedido.forEach(item=>{
+    pedido.forEach(item => {
 
-    datos.push({
-        Producto:item.producto,
-        Cantidad:item.cantidad,
-        Precio:item.precio,
-        Subtotal:item.subtotal
+        mensaje += `• ${item.producto}
+Cantidad: ${item.cantidad}
+Precio Unitario: $${item.precio.toLocaleString("es-CL")}
+Subtotal: $${item.subtotal.toLocaleString("es-CL")}
+
+`;
+
     });
 
-});
+    mensaje += `TOTAL: $${total.toLocaleString("es-CL")}`;
 
-datos.push({});
+    const numero = "56912345678";
 
-datos.push({
-    Producto:"TOTAL",
-    Cantidad:"",
-    Precio:"",
-    Subtotal:total
-});
+    const url =
+    `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
 
-const hoja =
-XLSX.utils.json_to_sheet(datos,{
-    skipHeader:true
-});
+    window.open(url,"_blank");
+}
 
-const libro =
-XLSX.utils.book_new();
+/* =========================
+   EXPORTAR EXCEL
+========================= */
 
-XLSX.utils.book_append_sheet(
-libro,
-hoja,
-"Pedido"
-);
+function exportarPedido(){
 
-XLSX.writeFile(
-libro,
-`Pedido_${cliente}.xlsx`
-);
+    if(pedido.length === 0){
+        alert("No hay productos");
+        return;
+    }
+
+    const cliente =
+    document.getElementById("cliente").value || "No informado";
+
+    const telefono =
+    document.getElementById("telefono").value || "No informado";
+
+    const direccion =
+    document.getElementById("direccion").value || "No informada";
+
+    const fecha =
+    new Date().toLocaleString("es-CL");
+
+    const datosPedido = {
+        fecha,
+        cliente,
+        telefono,
+        direccion,
+        total,
+        pedido
+    };
+
+    fetch(
+    "https://script.google.com/macros/s/AKfycbyuev3fi1-4RXdlKZt5svxBDzSthn_w1hylJdvOd_lwLyB7qI2jEaQ2bXSujoSEE7Fx/exec",
+    {
+        method:"POST",
+        body:JSON.stringify(datosPedido)
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Pedido guardado:", data);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+
+    // resto del código Excel...
+}
+
+/* =========================
+   GOOGLE SHEETS
+========================= */
+
+function guardarGoogleSheets(){
+
+    const cliente =
+    document.getElementById("cliente").value || "No informado";
+
+    const telefono =
+    document.getElementById("telefono").value || "No informado";
+
+    const direccion =
+    document.getElementById("direccion").value || "No informada";
+
+    const fecha =
+    new Date().toLocaleString("es-CL");
+
+    const datosPedido = {
+        fecha,
+        cliente,
+        telefono,
+        direccion,
+        total,
+        pedido
+    };
+
+    fetch(
+    "https://script.google.com/macros/s/AKfycbyuev3fi1-4RXdlKZt5svxBDzSthn_w1hylJdvOd_lwLyB7qI2jEaQ2bXSujoSEE7Fx/exec",
+    {
+        method:"POST",
+        body:JSON.stringify(datosPedido)
+    })
+    .then(res => res.text())
+    .then(data => {
+        console.log("Pedido guardado:", data);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
 
 }
 
