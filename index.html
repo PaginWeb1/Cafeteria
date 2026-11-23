@@ -667,16 +667,15 @@ PEDIDO
 
 `;
 
-    pedido.forEach(item => {
+pedido.forEach(item => {
 
-        mensaje += `• ${item.producto}
+    mensaje +=
+`• ${item.producto}
 Cantidad: ${item.cantidad}
 Precio Unitario: $${item.precio.toLocaleString("es-CL")}
 Subtotal: $${item.subtotal.toLocaleString("es-CL")}
-
 `;
-
-    });
+});
 
     mensaje += `TOTAL: $${total.toLocaleString("es-CL")}`;
 
