@@ -563,7 +563,7 @@ placeholder="Dirección">
     
 <button
 class="btn btn-warning btn-sm w-100 mt-2"
-onclick="onclick="procesarPedido()"">
+onclick="procesarPedido()"">
 💳 Pagar
 </button>
 </div>
@@ -655,7 +655,7 @@ function enviarWhatsApp(){
     const fecha =
     new Date().toLocaleString("es-CL");
 
-    let mensaje = `☕ CAFÉ AROMA PREMIUM
+    let mensaje = ☕ CAFÉ AROMA PREMIUM
 
 Fecha: ${fecha}
 
@@ -669,20 +669,19 @@ PEDIDO
 
 pedido.forEach(item => {
 
-    mensaje +=
-`• ${item.producto}
+mensaje += `• ${item.producto}
 Cantidad: ${item.cantidad}
 Precio Unitario: $${item.precio.toLocaleString("es-CL")}
 Subtotal: $${item.subtotal.toLocaleString("es-CL")}
 `;
 });
 
-    mensaje += `TOTAL: $${total.toLocaleString("es-CL")}`;
+   mensaje += `TOTAL: $${total.toLocaleString("es-CL")}`;
 
     const numero = "56912345678";
 
-    const url =
-    `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+const url =
+`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(url,"_blank");
 }
@@ -720,11 +719,15 @@ function exportarPedido(){
     };
 
     fetch(
-    "https://script.google.com/macros/s/AKfycbyuev3fi1-4RXdlKZt5svxBDzSthn_w1hylJdvOd_lwLyB7qI2jEaQ2bXSujoSEE7Fx/exec",
-    {
-        method:"POST",
-        body:JSON.stringify(datosPedido)
-    })
+"https://script.google.com/macros/s/AKfycbyuev3fi1-4RXdlKZt5svxBDzSthn_w1hylJdvOd_lwLyB7qI2jEaQ2bXSujoSEE7Fx/exec",
+{
+ method:"POST",
+ mode:"no-cors",
+ headers:{
+   "Content-Type":"text/plain"
+ },
+ body:JSON.stringify(datosPedido)
+});
     .then(response => response.text())
     .then(data => {
         console.log("Pedido guardado:", data);
