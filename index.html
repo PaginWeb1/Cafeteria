@@ -422,4 +422,159 @@ Cafés Fríos
 <div class="row g-4">
 
 <div class="col-md-6">
-<div class
+<div class="card">
+<div class="card-body text-center">
+<h3>Cold Brew</h3>
+<p>Preparación lenta en frío.</p>
+<div class="precio">$4.000</div>
+<button class="btn btn-cafe mt-3" onclick="agregarCarrito(4000)">Agregar</button>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="card">
+<div class="card-body text-center">
+<h3>Frappé Café</h3>
+<p>Refrescante y cremoso.</p>
+<div class="precio">$4.800</div>
+<button class="btn btn-cafe mt-3" onclick="agregarCarrito(4800)">Agregar</button>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- POSTRES -->
+
+<section id="postres">
+
+<div class="container">
+
+<h2 class="text-center section-title">
+Postres
+</h2>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+<div class="card">
+<div class="card-body">
+<h4>Croissant</h4>
+<div class="precio">$2.200</div>
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card">
+<div class="card-body">
+<h4>Cheesecake</h4>
+<div class="precio">$3.500</div>
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card">
+<div class="card-body">
+<h4>Muffin Chocolate</h4>
+<div class="precio">$2.800</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- NOSOTROS -->
+
+<section id="nosotros" class="bg-light">
+
+<div class="container text-center">
+
+<h2 class="section-title">
+Sobre Nosotros
+</h2>
+
+<p class="lead">
+Seleccionamos cuidadosamente los mejores granos para ofrecer una experiencia única en cada taza.
+</p>
+
+</div>
+
+</section>
+
+<footer class="text-center">
+<h5>☕ Café Aroma Premium</h5>
+<p class="mb-0">© 2026 Todos los derechos reservados</p>
+</footer>
+
+<!-- CARRITO -->
+
+<div class="carrito">
+🛒 Total: $<span id="total">0</span>
+</div>
+
+<!-- WHATSAPP -->
+
+<a
+href="https://wa.me/56912345678?text=Hola%20quiero%20hacer%20un%20pedido"
+class="whatsapp"
+target="_blank">
+
+<i class="bi bi-whatsapp"></i>
+
+</a>
+
+<!-- TOAST -->
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+
+<div id="toastCafe" class="toast">
+
+<div class="toast-header">
+<strong class="me-auto">☕ Café Aroma</strong>
+</div>
+
+<div class="toast-body">
+Producto agregado al carrito.
+</div>
+
+</div>
+
+</div>
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+let total = 0;
+
+function agregarCarrito(precio){
+
+    total += precio;
+
+    document.getElementById("total").innerText =
+    total.toLocaleString("es-CL");
+
+    const toast = new bootstrap.Toast(
+        document.getElementById("toastCafe")
+    );
+
+    toast.show();
+}
+
+</script>
+
+</body>
+</html>
