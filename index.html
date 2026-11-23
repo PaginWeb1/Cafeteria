@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Café Aroma</title>
+<title>Café Aroma Premium</title>
 
 <style>
 
@@ -12,30 +12,39 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: Arial, sans-serif;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background:#f5f1eb;
+    background:#f8f5f0;
 }
+
+/* HEADER */
 
 header{
     background:#4b2e2e;
     color:white;
-    padding:20px;
     text-align:center;
+    padding:20px;
 }
+
+/* NAV */
 
 nav{
     background:#6f4e37;
     position:sticky;
     top:0;
-    z-index:100;
+    z-index:1000;
 }
 
 nav ul{
     display:flex;
     justify-content:center;
+    flex-wrap:wrap;
     list-style:none;
 }
 
@@ -47,324 +56,468 @@ nav ul li a{
     color:white;
     text-decoration:none;
     font-weight:bold;
-    transition:0.3s;
+    transition:.3s;
 }
 
 nav ul li a:hover{
     color:#ffd700;
 }
 
+/* HERO */
+
 .hero{
+    height:450px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
     text-align:center;
-    padding:60px 20px;
-    background:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200')
-    center/cover;
     color:white;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.5),
+        rgba(0,0,0,.5)
+    ),
+    url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80");
+
+    background-size:cover;
+    background-position:center;
 }
 
 .hero h1{
-    font-size:50px;
-    margin-bottom:10px;
+    font-size:4rem;
+    text-shadow:2px 2px 10px rgba(0,0,0,.5);
 }
 
 .hero p{
-    font-size:20px;
+    font-size:1.4rem;
 }
 
 section{
-    padding:50px 20px;
+    padding:60px 20px;
 }
 
 h2{
     text-align:center;
-    margin-bottom:30px;
     color:#4b2e2e;
+    margin-bottom:30px;
 }
+
+/* GRID */
 
 .menu{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:20px;
 }
 
+/* CARD */
+
 .card{
     background:white;
-    border-radius:10px;
+    border-radius:15px;
     overflow:hidden;
-    box-shadow:0px 3px 10px rgba(0,0,0,0.2);
-    transition:0.3s;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    transition:.4s;
 }
 
 .card:hover{
-    transform:translateY(-5px);
+    transform:translateY(-8px);
 }
 
 .card img{
     width:100%;
-    height:200px;
+    height:220px;
     object-fit:cover;
+    transition:.5s;
+}
+
+.card:hover img{
+    transform:scale(1.08);
 }
 
 .card-content{
-    padding:15px;
+    padding:18px;
 }
 
 .card-content h3{
     color:#4b2e2e;
+    margin-bottom:8px;
+}
+
+.etiqueta{
+    background:#6f4e37;
+    color:white;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    display:inline-block;
+    margin-bottom:10px;
 }
 
 .precio{
     color:#27ae60;
-    font-size:22px;
+    font-size:24px;
     font-weight:bold;
     margin-top:10px;
 }
+
+.btn-carrito{
+    width:100%;
+    margin-top:15px;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#6f4e37;
+    color:white;
+    font-weight:bold;
+}
+
+.btn-carrito:hover{
+    background:#4b2e2e;
+}
+
+/* NOSOTROS */
+
+#nosotros{
+    text-align:center;
+    max-width:900px;
+    margin:auto;
+    line-height:1.8;
+}
+
+/* FOOTER */
 
 footer{
     background:#4b2e2e;
     color:white;
     text-align:center;
-    padding:20px;
+    padding:25px;
+    margin-top:20px;
+}
+
+/* CARRITO */
+
+.carrito{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#4b2e2e;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    font-weight:bold;
+    box-shadow:0 0 15px rgba(0,0,0,.3);
+}
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:2.5rem;
+}
+
+.hero p{
+    font-size:1rem;
+}
+
 }
 
 </style>
 </head>
+
 <body>
 
 <header>
-    <h1>Café Aroma</h1>
-    <p>Los mejores cafés para tu día</p>
+
+<h1>☕ Café Aroma</h1>
+<p>Los mejores cafés para tu día</p>
+
 </header>
 
 <nav>
-    <ul>
-        <li><a href="#cafes">Cafés</a></li>
-        <li><a href="#especiales">Especiales</a></li>
-        <li><a href="#frios">Fríos</a></li>
-    </ul>
+
+<ul>
+<li><a href="#cafes">Clásicos</a></li>
+<li><a href="#especiales">Especiales</a></li>
+<li><a href="#gourmet">Gourmet</a></li>
+<li><a href="#frios">Fríos</a></li>
+<li><a href="#postres">Postres</a></li>
+<li><a href="#nosotros">Nosotros</a></li>
+</ul>
+
 </nav>
 
-<div class="hero">
-    <h1>Bienvenido a Café Aromas</h1>
-    <p>Disfruta del mejor sabor y aroma.</p>
-</div>
+<section class="hero">
+
+<h1>Bienvenido a Café Aroma</h1>
+
+<p>
+Descubre sabores únicos en cada taza.
+</p>
+
+</section>
+
+<!-- CLASICOS -->
 
 <section id="cafes">
-    <h2>Cafés Clásicos</h2>
 
-    <div class="menu">
+<h2>Cafés Clásicos</h2>
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800">
-            <div class="card-content">
-                <h3>Espresso</h3>
-                <p>Café intenso y aromático.</p>
-                <div class="precio">$2.500</div>
-            </div>
-        </div>
+<div class="menu">
 
-        <!-- ESPRESSO -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800">
-        <div class="card-content">
-            <h3>Espresso</h3>
-            <p>Café intenso y aromático.</p>
-            <div class="precio">$2.500</div>
-        </div>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Espresso</h3>
+<p>Café intenso y aromático.</p>
+<div class="precio">$2.500</div>
+<button class="btn-carrito" onclick="agregarCarrito(2500)">Agregar al carrito</button>
+</div>
+</div>
 
-    <!-- AMERICANO -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?w=800">
-        <div class="card-content">
-            <h3>Americano</h3>
-            <p>Suave y equilibrado.</p>
-            <div class="precio">$3.000</div>
-        </div>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Americano</h3>
+<p>Suave y equilibrado.</p>
+<div class="precio">$3.000</div>
+<button class="btn-carrito" onclick="agregarCarrito(3000)">Agregar al carrito</button>
+</div>
+</div>
 
-    <!-- CAPPUCCINO -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=800">
-        <div class="card-content">
-            <h3>Cappuccino</h3>
-            <p>Espuma cremosa y canela.</p>
-            <div class="precio">$3.500</div>
-        </div>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Cappuccino</h3>
+<p>Espuma cremosa y canela.</p>
+<div class="precio">$3.500</div>
+<button class="btn-carrito" onclick="agregarCarrito(3500)">Agregar al carrito</button>
+</div>
+</div>
 
-    <!-- MACCHIATO -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800">
-        <div class="card-content">
-            <h3>Macchiato</h3>
-            <p>Espresso con espuma de leche.</p>
-            <div class="precio">$3.200</div>
-        </div>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Macchiato</h3>
+<p>Espresso con espuma de leche.</p>
+<div class="precio">$3.200</div>
+<button class="btn-carrito" onclick="agregarCarrito(3200)">Agregar al carrito</button>
+</div>
+</div>
 
-    <!-- FLAT WHITE -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1523942839745-7848d9c7f1f9?w=800">
-        <div class="card-content">
-            <h3>Flat White</h3>
-            <p>Espresso doble con leche suave.</p>
-            <div class="precio">$3.800</div>
-        </div>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Cortado</h3>
+<p>Espresso mezclado con leche caliente.</p>
+<div class="precio">$3.100</div>
+<button class="btn-carrito" onclick="agregarCarrito(3100)">Agregar al carrito</button>
+</div>
+</div>
 
-    <!-- CORTADO -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800">
-        <div class="card-content">
-            <h3>Cortado</h3>
-            <p>Espresso mezclado con leche caliente.</p>
-            <div class="precio">$3.100</div>
-        </div>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Latte</h3>
+<p>Cremoso y equilibrado.</p>
+<div class="precio">$3.900</div>
+<button class="btn-carrito" onclick="agregarCarrito(3900)">Agregar al carrito</button>
+</div>
+</div>
 
-    <!-- LATTE -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800">
-        <div class="card-content">
-            <h3>Latte</h3>
-            <p>Cremoso café con abundante leche.</p>
-            <div class="precio">$3.900</div>
-        </div>
-    </div>
+</div>
 
-    <!-- MOKA -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800">
-        <div class="card-content">
-            <h3>Moka</h3>
-            <p>Combinación perfecta de café y chocolate.</p>
-            <div class="precio">$4.200</div>
-        </div>
-    </div>
-
-    <!-- AFFOGATO -->
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=800">
-        <div class="card-content">
-            <h3>Affogato</h3>
-            <p>Helado de vainilla cubierto con espresso.</p>
-            <div class="precio">$4.700</div>
-        </div>
-    </div>
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?w=800">
-            <div class="card-content">
-                <h3>Americano</h3>
-                <p>Suave y equilibrado.</p>
-                <div class="precio">$3.000</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=800">
-            <div class="card-content">
-                <h3>Cappuccino</h3>
-                <p>Espuma cremosa y canela.</p>
-                <div class="precio">$3.500</div>
-            </div>
-        </div>
-
-    </div>
 </section>
+
+<!-- ESPECIALES -->
 
 <section id="especiales">
-    <h2>Cafés Especiales</h2>
 
-    <div class="menu">
+<h2>Cafés Especiales</h2>
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800">
-            <div class="card-content">
-                <h3>Latte Vainilla</h3>
-                <p>Leche vaporizada y vainilla.</p>
-                <div class="precio">$4.000</div>
-            </div>
-        </div>
+<div class="menu">
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=800">
-            <div class="card-content">
-                <h3>Mocha</h3>
-                <p>Café con chocolate.</p>
-                <div class="precio">$4.500</div>
-            </div>
-        </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<span class="etiqueta">Popular</span>
+<h3>Caramel Latte</h3>
+<p>Latte suave con caramelo artesanal.</p>
+<div class="precio">$4.900</div>
+<button class="btn-carrito" onclick="agregarCarrito(4900)">Agregar al carrito</button>
+</div>
+</div>
 
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<span class="etiqueta">Nuevo</span>
+<h3>Hazelnut Latte</h3>
+<p>Leche y avellanas tostadas.</p>
+<div class="precio">$5.200</div>
+<button class="btn-carrito" onclick="agregarCarrito(5200)">Agregar al carrito</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<span class="etiqueta">Premium</span>
+<h3>Irish Coffee</h3>
+<p>Café con crema especial.</p>
+<div class="precio">$5.500</div>
+<button class="btn-carrito" onclick="agregarCarrito(5500)">Agregar al carrito</button>
+</div>
+</div>
+
+</div>
+
 </section>
+
+<!-- GOURMET -->
+
+<section id="gourmet">
+
+<h2>Cafés Gourmet</h2>
+
+<div class="menu">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<span class="etiqueta">Gourmet</span>
+<h3>Blue Mountain</h3>
+<p>Café premium de Jamaica.</p>
+<div class="precio">$8.500</div>
+<button class="btn-carrito" onclick="agregarCarrito(8500)">Agregar al carrito</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<span class="etiqueta">Exclusivo</span>
+<h3>Geisha Panamá</h3>
+<p>Notas florales únicas.</p>
+<div class="precio">$9.500</div>
+<button class="btn-carrito" onclick="agregarCarrito(9500)">Agregar al carrito</button>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- FRIOS -->
 
 <section id="frios">
-    <h2>Cafés Fríos</h2>
 
-    <div class="menu">
+<h2>Cafés Fríos</h2>
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1f3d0?w=800">
-            <div class="card-content">
-                <h3>Cold Brew</h3>
-                <p>Preparación en frío durante horas.</p>
-                <div class="precio">$4.000</div>
-            </div>
-        </div>
+<div class="menu">
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=800">
-            <div class="card-content">
-                <h3>Frappé Café</h3>
-                <p>Refrescante y cremoso.</p>
-                <div class="precio">$4.800</div>
-            </div>
-        </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1f3d0?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Cold Brew</h3>
+<p>Preparación lenta en frío.</p>
+<div class="precio">$4.000</div>
+<button class="btn-carrito" onclick="agregarCarrito(4000)">Agregar al carrito</button>
+</div>
+</div>
 
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Frappé Café</h3>
+<p>Refrescante y cremoso.</p>
+<div class="precio">$4.800</div>
+<button class="btn-carrito" onclick="agregarCarrito(4800)">Agregar al carrito</button>
+</div>
+</div>
+
+</div>
+
 </section>
+
+<!-- POSTRES -->
+
 <section id="postres">
 
-    <h2>Postres</h2>
+<h2>Postres</h2>
 
-    <div class="menu">
+<div class="menu">
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800">
-            <div class="card-content">
-                <h3>Croissant</h3>
-                <p>Hojaldre recién horneado.</p>
-                <div class="precio">$2.200</div>
-            </div>
-        </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Croissant</h3>
+<p>Hojaldre recién horneado.</p>
+<div class="precio">$2.200</div>
+</div>
+</div>
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800">
-            <div class="card-content">
-                <h3>Cheesecake</h3>
-                <p>Tarta de queso con frutos rojos.</p>
-                <div class="precio">$3.500</div>
-            </div>
-        </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Cheesecake</h3>
+<p>Tarta de queso y frutos rojos.</p>
+<div class="precio">$3.500</div>
+</div>
+</div>
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800">
-            <div class="card-content">
-                <h3>Muffin Chocolate</h3>
-                <p>Muffin artesanal relleno de chocolate.</p>
-                <div class="precio">$2.800</div>
-            </div>
-        </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=800&q=80">
+<div class="card-content">
+<h3>Muffin Chocolate</h3>
+<p>Relleno con chocolate belga.</p>
+<div class="precio">$2.800</div>
+</div>
+</div>
 
-    </div>
+</div>
 
-</section>    
+</section>
+
+<!-- NOSOTROS -->
+
+<section id="nosotros">
+
+<h2>Sobre Café Aroma</h2>
+
+<p>
+En Café Aroma seleccionamos cuidadosamente los mejores granos de café para entregar una experiencia única. Cada taza combina tradición, calidad y pasión por el café.
+</p>
+
+</section>
 
 <footer>
-    <p>© 2026 Café Aroma | Todos los derechos reservados</p>
+
+<p>© 2026 Café Aroma Premium | Todos los derechos reservados</p>
+
 </footer>
+
+<div class="carrito">
+🛒 Total: $
+<span id="total">0</span>
+</div>
+
+<script>
+
+let total = 0;
+
+function agregarCarrito(precio){
+
+    total += precio;
+
+    document.getElementById("total").innerText =
+    total.toLocaleString("es-CL");
+
+}
+
+</script>
 
 </body>
 </html>
