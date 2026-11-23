@@ -677,7 +677,23 @@ if(pedido.length === 0){
     alert("No hay productos");
     return;
 }
-
+const datosPedido = {
+    fecha,
+    cliente,
+    telefono,
+    direccion,
+    pedido
+};
+fetch(
+"https://script.google.com/macros/s/TU_ID/exec",
+{
+    method:"POST",
+    body:JSON.stringify(datosPedido)
+})
+.then(r => r.text())
+.then(data => {
+    console.log("Pedido guardado");
+});
 const cliente =
 document.getElementById("cliente").value || "No informado";
 
