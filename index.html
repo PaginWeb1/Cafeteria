@@ -563,7 +563,7 @@ placeholder="Dirección">
     
 <button
 class="btn btn-warning btn-sm w-100 mt-2"
-onclick="guardarGoogleSheets(); exportarPedido(); enviarWhatsApp();">
+onclick="onclick="procesarPedido()"">
 💳 Pagar
 </button>
 </div>
@@ -776,6 +776,24 @@ function guardarGoogleSheets(){
     .catch(error => {
         console.error("Error:", error);
     });
+
+}
+
+    /* =========================
+    PROCESAR PEDIDO
+========================= */
+
+    function procesarPedido(){
+
+    guardarGoogleSheets();
+
+    setTimeout(() => {
+
+        exportarPedido();
+
+        enviarWhatsApp();
+
+    },1000);
 
 }
 
