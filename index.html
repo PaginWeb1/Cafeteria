@@ -535,6 +535,32 @@ Seleccionamos cuidadosamente los mejores granos para ofrecer una experiencia ún
 <div>
 🛒 Total: $<span id="total">0</span>
 </div>
+
+<div class="card mt-3 p-3">
+
+<h5>Datos del Cliente</h5>
+
+<input
+id="cliente"
+type="text"
+class="form-control mb-2"
+placeholder="Nombre">
+
+<input
+id="telefono"
+type="text"
+class="form-control mb-2"
+placeholder="Teléfono">
+
+<input
+id="direccion"
+type="text"
+class="form-control"
+placeholder="Dirección">
+
+</div>
+    
+    
 <button
 class="btn btn-warning btn-sm w-100 mt-2"
 onclick="exportarPedido()">
@@ -542,10 +568,8 @@ onclick="exportarPedido()">
 </button>
 </div>
 
-<a href="https://wa.me/56912345678?text=Hola%20quiero%20hacer%20un%20pedido"
-class="whatsapp"
-target="_blank">
-<i class="bi bi-whatsapp"></i>
+<a href="https://wa.me/56912345678?text=Hola%20quiero%20hacer%20un%20pedido" class="whatsapp" onclick="enviarWhatsApp()">
+    <i class="bi bi-whatsapp"></i>
 </a>
 
 <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -563,6 +587,54 @@ Producto agregado al carrito.
 
 <script>
 
+function enviarWhatsApp() {
+
+    if (pedido.length === 0) {
+        alert("No hay productos en el carrito");
+        return;
+    }
+
+    const cliente =
+        document.getElementById("cliente").value || "No informado";
+
+    const telefono =
+        document.getElementById("telefono").value || "No informado";
+
+    const direccion =
+        document.getElementById("direccion").value || "No informada";
+
+    let mensaje =
+`☕ CAFÉ AROMA PREMIUM
+
+Cliente: ${cliente}
+Teléfono: ${telefono}
+Dirección: ${direccion}
+
+PEDIDO:
+`;
+
+    pedido.forEach(item => {
+
+        mensaje += `
+${item.producto}
+x${item.cantidad}
+= $${item.subtotal.toLocaleString("es-CL")}
+`;
+    });
+
+    mensaje += `
+
+TOTAL: $${total.toLocaleString("es-CL")}
+`;
+
+    const numero = "56912345678";
+
+    const url =
+        `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
+}    
+
 let total = 0;
 let pedido = [];
 
@@ -570,10 +642,24 @@ function agregarCarrito(nombre, precio){
 
     total += precio;
 
+  const existente =
+pedido.find(p => p.producto === nombre);
+
+if(existente){
+
+    existente.cantidad++;
+    existente.subtotal += precio;
+
+}else{
+
     pedido.push({
-        producto: nombre,
-        precio: precio
+        producto:nombre,
+        cantidad:1,
+        precio:precio,
+        subtotal:precio
     });
+
+}
 
     document.getElementById("total").innerText =
     total.toLocaleString("es-CL");
@@ -585,37 +671,104 @@ function agregarCarrito(nombre, precio){
     toast.show();
 }
 
-    function exportarPedido(){
+ function exportarPedido(){
 
-    if(pedido.length === 0){
-        alert("No hay productos en el carrito");
-        return;
-    }
+if(pedido.length === 0){
+    alert("No hay productos");
+    return;
+}
 
-    const datos = pedido.map(item => ({
-        Producto: item.producto,
-        Precio: item.precio
-    }));
+const cliente =
+document.getElementById("cliente").value || "No informado";
+
+const telefono =
+document.getElementById("telefono").value || "No informado";
+
+const direccion =
+document.getElementById("direccion").value || "No informada";
+
+const fecha =
+new Date().toLocaleString("es-CL");
+
+let datos = [];
+
+datos.push({
+    Producto:"CAFÉ AROMA PREMIUM",
+    Cantidad:"",
+    Precio:"",
+    Subtotal:""
+});
+
+datos.push({});
+
+datos.push({
+    Producto:"Fecha",
+    Cantidad:fecha
+});
+
+datos.push({
+    Producto:"Cliente",
+    Cantidad:cliente
+});
+
+datos.push({
+    Producto:"Teléfono",
+    Cantidad:telefono
+});
+
+datos.push({
+    Producto:"Dirección",
+    Cantidad:direccion
+});
+
+datos.push({});
+
+datos.push({
+    Producto:"Producto",
+    Cantidad:"Cantidad",
+    Precio:"Precio Unitario",
+    Subtotal:"Subtotal"
+});
+
+pedido.forEach(item=>{
 
     datos.push({
-        Producto: "TOTAL",
-        Precio: total
+        Producto:item.producto,
+        Cantidad:item.cantidad,
+        Precio:item.precio,
+        Subtotal:item.subtotal
     });
 
-    const hoja = XLSX.utils.json_to_sheet(datos);
+});
 
-    const libro = XLSX.utils.book_new();
+datos.push({});
 
-    XLSX.utils.book_append_sheet(
-        libro,
-        hoja,
-        "Pedido"
-    );
+datos.push({
+    Producto:"TOTAL",
+    Cantidad:"",
+    Precio:"",
+    Subtotal:total
+});
 
-    XLSX.writeFile(
-        libro,
-        "Pedido_CafeAroma.xlsx"
-    );
+const hoja =
+XLSX.utils.json_to_sheet(datos,{
+    skipHeader:true
+});
+
+const libro =
+XLSX.utils.book_new();
+
+XLSX.utils.book_append_sheet(
+libro,
+hoja,
+"Pedido"
+);
+
+XLSX.writeFile(
+libro,
+`Pedido_${cliente}.xlsx`
+);
+
 }
 
 </script>
